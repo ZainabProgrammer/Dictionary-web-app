@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
+import Main from "./components/Main";
+import React, { useEffect, useState } from "react";
+const customTypography = {
+  fontFamily: "unset",
+};
+const theme = createTheme({
+  typography: customTypography,
+});
 
 function App() {
+  const [isDarkMode, setIsDarkMode] = React.useState(
+    localStorage.getItem("dark-mode") === "true"
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <ThemeProvider theme={theme}>
+      <>
+        <Box
+          sx={{
+            background: isDarkMode ? "black" : "white",
+            width: "100%",
+            height: "100vh",
+            overflowX: "hidden",
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          {/* Header Component */}
+          <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+          <Main isDarkMode={isDarkMode} />
+        </Box>
+      </>
+    </ThemeProvider>
   );
 }
 
